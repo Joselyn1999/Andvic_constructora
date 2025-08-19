@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <!-- Mismos metadatos y estilos que tu página principal -->
+    <title>ANDVIC - Proyectos en Barcelona</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="./favicon.ico">
+    <link rel="stylesheet" href="./styles.css">
+    <style>
+        .city-gallery {
+    padding: 100px 0;
+}
+
+.city-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 30px;
+    margin-top: 50px;
+}
+
+.city-project {
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+}
+
+.city-project:hover {
+    transform: translateY(-10px);
+}
+
+.city-project img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    display: block;
+}
+
+.city-project h3 {
+    padding: 20px;
+    font-size: 1.3rem;
+    color: #2c3e50;
+}
+
+.city-project p {
+    padding: 0 20px 20px;
+    color: #666;
+}
+
+@media (max-width: 768px) {
+    .city-grid {
+        grid-template-columns: 1fr;
+    }
+}
+    </style>
+
+</head>
+<body>
+    <!-- Header similar al de tu página principal -->
+    
+    <section class="city-gallery">
+        <div class="container">
+            <h1>Proyectos en Barcelona</h1>
+            
+            <div class="city-grid">
+                <!-- Proyecto Sitges -->
+                <div class="city-project">
+                    <img src="./odena+interiors+(1)-1920w.webp" alt="Proyecto en Sitges">
+                    <h3>Sitges - Residencial Marítimo</h3>
+                    <p>12 viviendas de lujo con vistas al mar</p>
+                </div>
+                
+                <!-- Proyecto Vilanova -->
+                <div class="city-project">
+                    <img src="./_AF_1088-3-1920w.webp" alt="Proyecto en Vilanova">
+                    <h3>Vilanova i la Geltrú - Jardines del Mar</h3>
+                    <p>Complejo residencial con zonas comunes</p>
+                </div>
+                
+                <!-- Más proyectos... -->
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer similar al de tu página principal -->
+</body>
+</html>
