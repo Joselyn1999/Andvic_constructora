@@ -1,88 +1,712 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <!-- Mismos metadatos y estilos que tu página principal -->
-    <title>ANDVIC - Proyectos en Barcelona</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/x-icon" href="./favicon.ico">
-    <link rel="stylesheet" href="./styles.css">
+    <title>ANDVIC - Proyectos Realizados</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
+        /* Estilos del header */
+        header {
+            background: rgba(255, 255, 255, 0.98);
+            padding: 15px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+        
+        header.scrolled {
+            padding: 10px 0;
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+        
+        .logo img {
+            height: 50px;
+            width: auto;
+            transition: all 0.4s ease;
+        }
+        
+        header.scrolled .logo img {
+            height: 40px;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: #555;
+            font-weight: 500;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 5px 0;
+        }
+        
+        .nav-links a:hover {
+            color: #27ae60;
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #2c3e50;
+            transition: width 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Estilos de la galería */
         .city-gallery {
-    padding: 100px 0;
-}
+            padding: 150px 0 80px;
+            background: #f8f9fa;
+        }
 
-.city-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-    gap: 30px;
-    margin-top: 50px;
-}
+        .city-gallery h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 50px;
+            position: relative;
+        }
 
-.city-project {
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-    transition: transform 0.3s ease;
-}
+        .city-gallery h1::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: #2c3e50;
+        }
 
-.city-project:hover {
-    transform: translateY(-10px);
-}
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
 
-.city-project img {
-    width: 100%;
-    height: 250px;
-    object-fit: cover;
-    display: block;
-}
+        .city-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
 
-.city-project h3 {
-    padding: 20px;
-    font-size: 1.3rem;
-    color: #2c3e50;
-}
+        .city-project {
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            background: white;
+        }
 
-.city-project p {
-    padding: 0 20px 20px;
-    color: #666;
-}
+        .city-project:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+        }
 
-@media (max-width: 768px) {
-    .city-grid {
-        grid-template-columns: 1fr;
-    }
-}
+        .city-project img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.8s ease;
+        }
+
+        .city-project:hover img {
+            transform: scale(1.05);
+        }
+
+        .city-project-content {
+            padding: 20px;
+        }
+
+        .city-project h3 {
+            font-size: 1.3rem;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        .city-project p {
+            color: #666;
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        .project-link {
+            display: inline-block;
+            padding: 8px 20px;
+            background: #2c3e50;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .project-link:hover {
+            background: #3757c0;
+            transform: translateY(-3px);
+        }
+
+        @media (max-width: 768px) {
+            .city-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .city-gallery {
+                padding: 120px 0 60px;
+            }
+            
+            .city-gallery h1 {
+                font-size: 2rem;
+            }
+        }
+
+        /* Estilos del footer */
+        footer {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 80px 0 30px;
+            position: relative;
+            font-size: 15px;
+            border-top: 3px solid #3757c0;
+        }
+
+        footer::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100" fill="none" stroke="%2327394d" stroke-width="0.5"><path d="M0 0 L100 0 L100 100 L0 100 Z"></path></svg>');
+            opacity: 0.5;
+            z-index: 0;
+        }
+
+        footer .container {
+            position: relative;
+            z-index: 1;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+
+        .footer-column {
+            margin-bottom: 30px;
+        }
+
+        .footer-logo img {
+            height: 50px;
+            width: auto;
+            margin-bottom: 20px;
+            filter: brightness(0) invert(1);
+        }
+
+        .footer-description {
+            color: #bdc3c7;
+            line-height: 1.7;
+            margin-bottom: 25px;
+        }
+
+        .footer-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            color: white;
+            margin-bottom: 25px;
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        .footer-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background: #27ae60;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: #bdc3c7;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+            padding-left: 15px;
+        }
+
+        .footer-links a::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: #27ae60;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: white;
+            padding-left: 20px;
+        }
+
+        .footer-links a:hover::before {
+            opacity: 1;
+            left: -5px;
+        }
+
+        .footer-contact {
+            list-style: none;
+            margin-bottom: 25px;
+        }
+
+        .footer-contact li {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 15px;
+            color: #bdc3c7;
+            line-height: 1.6;
+        }
+
+        .footer-contact i {
+            color: #27ae60;
+            margin-right: 15px;
+            font-size: 16px;
+            margin-top: 3px;
+        }
+
+        .footer-contact a {
+            color: #bdc3c7;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer-contact a:hover {
+            color: white;
+        }
+
+        .btn-contact {
+            display: inline-block;
+            padding: 12px 25px;
+            background: white;
+            color: #2c3e50;
+            text-decoration: none;
+            font-weight: 600;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+
+        .btn-contact:hover {
+            background: #219653;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(39, 174, 96, 0.3);
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .social-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            color: white;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+
+        .social-icon:hover {
+            background: #27ae60;
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .footer-legal {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .footer-legal a {
+            color: #bdc3c7;
+            text-decoration: none;
+            font-size: 13px;
+            transition: all 0.3s ease;
+        }
+
+        .footer-legal a:hover {
+            color: white;
+        }
+
+        .footer-copyright p {
+            font-size: 13px;
+            color: #7f8c8d;
+            margin: 0;
+        }
+
+        @media (max-width: 768px) {
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            
+            .footer-column {
+                margin-bottom: 0;
+            }
+            
+            .footer-title {
+                margin-bottom: 15px;
+            }
+            
+            .footer-links li {
+                margin-bottom: 8px;
+            }
+        }
     </style>
-
 </head>
 <body>
-    <!-- Header similar al de tu página principal -->
-    
+    <!-- Header -->
+    <header id="header">
+        <nav>
+            <div class="logo">
+                <a href="index.html"><img src="./logo.png" alt="ANDVIC Logo"></a>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html#inicio">Inicio</a></li>
+                <li><a href="index.html#proyectos">Proyectos</a></li>
+                <li><a href="index.html#servicios">Servicios</a></li>
+                <li><a href="index.html#nosotros">Nosotros</a></li>
+                <li><a href="index.html#contacto">Contacto</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Galería de proyectos en Barcelona -->
     <section class="city-gallery">
         <div class="container">
-            <h1>Proyectos en Barcelona</h1>
+            <h1>Proyectos Realizados</h1>
             
             <div class="city-grid">
-                <!-- Proyecto Sitges -->
+                <!-- Proyecto 1 -->
                 <div class="city-project">
-                    <img src="./odena+interiors+(1)-1920w.webp" alt="Proyecto en Sitges">
-                    <h3>Sitges - Residencial Marítimo</h3>
-                    <p>12 viviendas de lujo con vistas al mar</p>
+                    <img src="./odena+interiors+(1)-1920w.webp" alt="Residencial Sitges Mar">
+                    <div class="city-project-content">
+                        <h3>Residencial Sitges Mar</h3>
+                        <p>12 viviendas de lujo con vistas al mar Mediterráneo y acabados de alta gama.</p>
+                        <a href="#" class="project-link">Ver detalles</a>
+                    </div>
                 </div>
                 
-                <!-- Proyecto Vilanova -->
+                <!-- Proyecto 2 -->
                 <div class="city-project">
-                    <img src="./_AF_1088-3-1920w.webp" alt="Proyecto en Vilanova">
-                    <h3>Vilanova i la Geltrú - Jardines del Mar</h3>
-                    <p>Complejo residencial con zonas comunes</p>
+                    <img src="./_AF_1088-3-1920w.webp" alt="Jardines de Vilanova">
+                    <div class="city-project-content">
+                        <h3>Jardines de Vilanova</h3>
+                        <p>Complejo residencial con amplias zonas comunes y jardines privados.</p>
+                        <a href="#" class="project-link">Ver detalles</a>
+                    </div>
                 </div>
                 
-                <!-- Más proyectos... -->
+                <!-- Proyecto 3 -->
+                <div class="city-project">
+                    <img src="./frontalado4-1920w.webp" alt="Badalona Moderna">
+                    <div class="city-project-content">
+                        <h3>Badalona Moderna</h3>
+                        <p>Edificio de diseño contemporáneo con 24 apartamentos y piscina comunitaria.</p>
+                        <a href="#" class="project-link">Ver detalles</a>
+                    </div>
+                </div>
+                
+                <!-- Proyecto 4 -->
+                <div class="city-project">
+                    <img src="./f+macia-1920w.webp" alt="Collbató Nature">
+                    <div class="city-project-content">
+                        <h3>Collbató Nature</h3>
+                        <p>Viviendas unifamiliares integradas en el entorno natural de Montserrat.</p>
+                        <a href="#" class="project-link">Ver detalles</a>
+                    </div>
+                </div>
+                
+                <!-- Proyecto 5 -->
+                <div class="city-project">
+                    <img src="./ST+PERE+DE+RIBES-1920w.webp" alt="La Llagosta Business">
+                    <div class="city-project-content">
+                        <h3>La Llagosta Business</h3>
+                        <p>Complejo mixto residencial y de oficinas cerca del centro logístico.</p>
+                        <a href="#" class="project-link">Ver detalles</a>
+                    </div>
+                </div>
+                
+                <!-- Proyecto 6 -->
+                <div class="city-project">
+                    <img src="./montgat-1920w.webp" alt="Esparreguera Familiar">
+                    <div class="city-project-content">
+                        <h3>Esparreguera Familiar</h3>
+                        <p>Viviendas de 3 y 4 dormitorios ideales para familias, con zonas infantiles.</p>
+                        <a href="#" class="project-link">Ver detalles</a>
+                    </div>
+                </div>
+                
+                <!-- Proyecto 7 -->
+                <div class="city-project">
+                    <img src="./odena+interiors+(1)-1920w.webp" alt="Montgat View">
+                    <div class="city-project-content">
+                        <h3>Montgat View</h3>
+                        <p>Apartamentos premium con vistas al mar y acceso directo a la playa.</p>
+                        <a href="#" class="project-link">Ver detalles</a>
+                    </div>
+                </div>
+                
+                <!-- Proyecto 8 -->
+                <div class="city-project">
+                    <img src="./_AF_1072-3-1920w.webp" alt="Sant Andreu Living">
+                    <div class="city-project-content">
+                        <h3>Sant Andreu Living</h3>
+                        <p>Modernas viviendas en el corazón de Sant Andreu de la Barca.</p>
+                        <a href="#" class="project-link">Ver detalles</a>
+                    </div>
+                </div>
+                
+                <!-- Proyecto 9 -->
+                <div class="city-project">
+                    <img src="./odena+interiors+(1)-1920w.webp" alt="Santa Coloma Green">
+                    <div class="city-project-content">
+                        <h3>Santa Coloma Green</h3>
+                        <p>Proyecto sostenible con certificación energética A y espacios verdes.</p>
+                        <a href="#" class="project-link">Ver detalles</a>
+                    </div>
+                </div>
+                
+                <!-- Proyecto 10 -->
+                <div class="city-project">
+                    <img src="./_AF_1088-3-1920w.webp" alt="Sitges Golden">
+                    <div class="city-project-content">
+                        <h3>Sitges Golden</h3>
+                        <p>Exclusivas villas con piscina privada y acceso a club náutico.</p>
+                        <a href="#" class="project-link">Ver detalles</a>
+                    </div>
+                </div>
+                
+                <!-- Proyecto 11 -->
+                <div class="city-project">
+                    <img src="./frontalado4-1920w.webp" alt="Vilanova Port">
+                    <div class="city-project-content">
+                        <h3>Vilanova Port</h3>
+                        <p>Residencial junto al puerto deportivo con amplias terrazas.</p>
+                        <a href="#" class="project-link">Ver detalles</a>
+                    </div>
+                </div>
+                
+                <!-- Proyecto 12 -->
+                <div class="city-project">
+                    <img src="./f+macia-1920w.webp" alt="Badalona Heights">
+                    <div class="city-project-content">
+                        <h3>Badalona Heights</h3>
+                        <p>Áticos de diseño con vistas panorámicas a la ciudad y al mar.</p>
+                        <a href="#" class="project-link">Ver detalles</a>
+                    </div>
+                </div>
+                
+                <!-- Proyecto 13 -->
+                <div class="city-project">
+                    <img src="./ST+PERE+DE+RIBES-1920w.webp" alt="Collbató Mountain">
+                    <div class="city-project-content">
+                        <h3>Collbató Mountain</h3>
+                        <p>Chalets adosados con vistas a Montserrat y amplios jardines.</p>
+                        <a href="#" class="project-link">Ver detalles</a>
+                    </div>
+                </div>
+                
+                <!-- Proyecto 14 -->
+                <div class="city-project">
+                    <img src="./montgat-1920w.webp" alt="La Llagosta Central">
+                    <div class="city-project-content">
+                        <h3>La Llagosta Central</h3>
+                        <p>Viviendas funcionales cerca de transporte y servicios esenciales.</p>
+                        <a href="#" class="project-link">Ver detalles</a>
+                    </div>
+                </div>
+                
+                <!-- Proyecto 15 -->
+                <div class="city-project">
+                    <img src="./PVM_Fac-ana01_sol_w-1920w.webp" alt="Esparreguera Classic">
+                    <div class="city-project-content">
+                        <h3>Esparreguera Classic</h3>
+                        <p>Rehabilitación de edificio histórico con apartamentos de carácter.</p>
+                        <a href="#" class="project-link">Ver detalles</a>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
     
-    <!-- Footer similar al de tu página principal -->
+    <!-- Footer -->
+    <footer id="contacto">
+        <div class="container">
+            <div class="footer-grid">
+                <!-- Columna 1 - Logo y descripción -->
+                <div class="footer-column">
+                    <div class="footer-logo">
+                        <h1>ANDVIC.ES</h1>
+                    </div>
+                    <p class="footer-description">
+                        Especialistas en viviendas saludables con el mínimo consumo energético. Innovación y sostenibilidad en cada proyecto.
+                    </p>
+                    <div class="footer-social">
+                        <a href="#" class="social-icon" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-icon" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-icon" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" class="social-icon" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <!-- Columna 2 - Enlaces rápidos -->
+                <div class="footer-column">
+                    <h3 class="footer-title">Enlaces Rápidos</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html#inicio">Inicio</a></li>
+                        <li><a href="index.html#proyectos">Proyectos</a></li>
+                        <li><a href="index.html#servicios">Servicios</a></li>
+                        <li><a href="index.html#nosotros">Sobre Nosotros</a></li>
+                        <li><a href="index.html#promociones">Promociones</a></li>
+                        <li><a href="index.html#contacto">Contacto</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Columna 3 - Servicios -->
+                <div class="footer-column">
+                    <h3 class="footer-title">Nuestros Servicios</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Promociones</a></li>
+                        <li><a href="#">Edificios de viviendas</a></li>
+                        <li><a href="#">Viviendas unifamiliares</a></li>
+                        <li><a href="#">Rehabilitación energética</a></li>
+                        <li><a href="#">Reformas y diseño interior</a></li>
+                        <li><a href="#">Gestión integral</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Columna 4 - Contacto -->
+                <div class="footer-column">
+                    <h3 class="footer-title">Contacto</h3>
+                    <ul class="footer-contact">
+                        <li>
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Av. Diagonal, 511, entlo, Distrito de Les Corts, 08029 Barcelona</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-phone-alt"></i>
+                            <a href="tel:+34931234567">+34 686 86 49 81</a>
+                        </li>
+                        <li>
+                            <i class="fas fa-envelope"></i>
+                            <a href="mailto:info@andvic.com">info@andvic.com</a>
+                        </li>
+                        <li>
+                            <i class="fas fa-clock"></i>
+                            <span>Lunes a Viernes: 9:00 - 18:00</span>
+                        </li>
+                    </ul>
+                    <a href="#" class="btn-contact">Solicitar información</a>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <div class="footer-legal">
+                    <a href="#">Política de Privacidad</a>
+                    <a href="#">Aviso Legal</a>
+                    <a href="#">Cookies</a>
+                </div>
+                <div class="footer-copyright">
+                    <p>&copy; 2025 ANDVIC - Promociones Inmobiliarias. Todos los derechos reservados.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Header scroll effect
+        window.addEventListener('scroll', function() {
+            const header = document.getElementById('header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
 </body>
 </html>
