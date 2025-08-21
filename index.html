@@ -993,10 +993,36 @@
         }
 
         .icono-llave {
-            width: 40px;
-            height: 40px;
-            object-fit: contain;
-        }
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+    transition: transform 0.3s ease; /* suaviza el inicio */
+}
+
+.icono-llave:hover {
+    animation: moverYGirar 2s infinite ease-in-out;
+}
+
+@keyframes moverYGirar {
+    0% {
+        transform: translateY(0) rotate(0deg);
+    }
+    25% {
+        transform: translateY(-10px) rotate(20deg);
+    }
+    50% {
+        transform: translateY(0) rotate(0deg);
+    }
+    75% {
+        transform: translateY(-10px) rotate(-20deg);
+    }
+    100% {
+        transform: translateY(0) rotate(0deg);
+    }
+}
+
+
+
 
         /* Promociones Carrusel - ESTILOS ACTUALIZADOS */
         .promo-carousel-container {
@@ -1116,7 +1142,7 @@
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
-            background: rgba(83, 121, 226, 0.9);
+            background:#868992;
             border: none;
             color: white;
             font-size: 1.5rem;
